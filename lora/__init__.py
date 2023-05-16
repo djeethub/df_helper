@@ -1,1 +1,1 @@
-import main
+from .main import load_lora, clear_lora
