@@ -1,6 +1,7 @@
 LORA_PREFIX_UNET = "lora_unet"
 LORA_PREFIX_TEXT_ENCODER = "lora_te"
 
+import torch
 from safetensors.torch import load_file
 
 def clear_lora(pipe):
@@ -56,6 +57,7 @@ def load_lora(pipe, path, alpha):
             pair_keys.append(key)
             pair_keys.append(key.replace("lora_up", "lora_down"))
 
+        device = curr_layer.weight.data.device
         dtype = curr_layer.weight.data.dtype
         # update weight
         if len(state_dict[pair_keys[0]].shape) == 4:

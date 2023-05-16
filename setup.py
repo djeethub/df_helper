@@ -2,12 +2,12 @@ from setuptools import setup, find_packages
 
 setup(
     name='df_helper',
-    version='0.0.4',
+    version='0.0.5',
     description='df_helper',
     packages=['lora'],
     url='https://github.com/djeethub/df_helper.git',
     packages=find_packages(),
     install_requires=[
-      'safetensors'
+      'torch', 'safetensors'
     ],
 )
