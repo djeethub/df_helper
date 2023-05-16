@@ -12,7 +12,7 @@ def clear_lora(pipe):
 
 def load_lora(pipe, path, alpha):
     # load LoRA weight from .safetensors
-    state_dict = load_file(path)
+    state_dict = load_file(path, pipe.device.type)
 
     visited = []
 
@@ -61,16 +61,16 @@ def load_lora(pipe, path, alpha):
         dtype = curr_layer.weight.data.dtype
         # update weight
         if len(state_dict[pair_keys[0]].shape) == 4:
-            weight_up = state_dict[pair_keys[0]].squeeze(3).squeeze(2).to(device, dtype)
+            weight_up = state_dict[pair_keys[0]].squeeze(3).squeeze(2)
             weight_down = (
-                state_dict[pair_keys[1]].squeeze(3).squeeze(2).to(device, dtype)
+                state_dict[pair_keys[1]].squeeze(3).squeeze(2)
             )
             curr_layer.weight.data += alpha * torch.mm(
                 weight_up, weight_down
             ).unsqueeze(2).unsqueeze(3)
         else:
-            weight_up = state_dict[pair_keys[0]].to(device, dtype)
-            weight_down = state_dict[pair_keys[1]].to(device, dtype)
+            weight_up = state_dict[pair_keys[0]]
+            weight_down = state_dict[pair_keys[1]]
             curr_layer.weight.data += alpha * torch.mm(weight_up, weight_down)
 
         # update visited list
