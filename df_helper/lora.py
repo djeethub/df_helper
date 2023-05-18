@@ -70,7 +70,7 @@ def load_lora(pipe, path, alpha):
         else:
             item_alpha = 1.0
 
-        if not original_weights[layer]:
+        if layer not in original_weights:
             original_weights[layer] = curr_layer.weight.data.clone().detach()
 
         # update weight
