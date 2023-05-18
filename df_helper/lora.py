@@ -45,7 +45,7 @@ def find_layer(pipe, layer):
 
 def load_lora(pipe, path, alpha):
     global current_pipeline, original_weights
-    
+
     if current_pipeline != pipe:
         current_pipeline = pipe
         original_weights = {}
@@ -53,7 +53,6 @@ def load_lora(pipe, path, alpha):
     # load LoRA weight from .safetensors
     state_dict = load_file(path, pipe.device.type)
     updates = defaultdict(dict)
-    dtype = pipe.dtype
 
     for key, value in state_dict.items():
         # it is suggested to print out the key, it usually will be something like below
@@ -66,8 +65,8 @@ def load_lora(pipe, path, alpha):
         curr_layer = find_layer(layer)
 
         # get elements for this layer
-        weight_up = elems['lora_up.weight'].to(dtype)
-        weight_down = elems['lora_down.weight'].to(dtype)
+        weight_up = elems['lora_up.weight'].to(curr_layer.dtype)
+        weight_down = elems['lora_down.weight'].to(curr_layer.dtype)
         item_alpha = elems['alpha']
         if item_alpha:
             item_alpha = item_alpha.item() / weight_up.shape[1]
