@@ -65,8 +65,8 @@ def load_lora(pipe, path, alpha):
         curr_layer = find_layer(pipe, layer)
 
         # get elements for this layer
-        weight_up = elems['lora_up.weight'].to(curr_layer.dtype)
-        weight_down = elems['lora_down.weight'].to(curr_layer.dtype)
+        weight_up = elems['lora_up.weight'].to(curr_layer.weight.data.dtype)
+        weight_down = elems['lora_down.weight'].to(curr_layer.weight.data.dtype)
         item_alpha = elems['alpha']
         if item_alpha:
             item_alpha = item_alpha.item() / weight_up.shape[1]
