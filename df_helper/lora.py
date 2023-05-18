@@ -62,7 +62,7 @@ def load_lora(pipe, path, alpha):
 
     # directly update weight in diffusers model
     for layer, elems in updates.items():
-        curr_layer = find_layer(layer)
+        curr_layer = find_layer(pipe, layer)
 
         # get elements for this layer
         weight_up = elems['lora_up.weight'].to(curr_layer.dtype)
