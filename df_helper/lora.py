@@ -9,6 +9,8 @@ current_pipeline = None
 original_weights = None
 
 def clear_lora(pipe):
+    global current_pipeline, original_weights
+
     if current_pipeline is not None and pipe == current_pipeline:
         for layer, data in original_weights.items():
             curr_layer = find_layer(pipe, layer)
@@ -42,6 +44,8 @@ def find_layer(pipe, layer):
     return curr_layer
 
 def load_lora(pipe, path, alpha):
+    global current_pipeline, original_weights
+    
     if current_pipeline != pipe:
         current_pipeline = pipe
         original_weights = {}

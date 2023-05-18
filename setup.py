@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='df_helper',
-    version='0.0.11',
+    version='0.0.12',
     description='df_helper',
     packages=['df_helper'],
     url='https://github.com/djeethub/df_helper.git',
