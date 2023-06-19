@@ -136,6 +136,8 @@ def vae_pt_to_vae_diffuser(
                 checkpoint[key] = f.get_tensor(key)
     else:
         checkpoint = torch.load(checkpoint_path, map_location=device)
+        if "state_dict" in checkpoint:
+            checkpoint = checkpoint["state_dict"]
 
     # Convert the VAE model.
     vae_config = create_vae_diffusers_config(original_config, image_size=image_size)
